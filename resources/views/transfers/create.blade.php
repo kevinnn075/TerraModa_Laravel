@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('title','Nueva transferencia')
+@section('heading','Transferencias')
+@section('content')
+<div class="welcome-row"><div><h2>Transferir metraje</h2><p>El movimiento quedará registrado en origen y destino.</p></div><a class="btn btn-outline-secondary" href="{{ route('transfers.index') }}">← Ver transferencias</a></div>
+<section class="panel form-panel"><form method="POST" action="{{ route('transfers.store') }}">@csrf<div class="form-grid"><div><label class="form-label">Sucursal de origen</label><select name="from_branch_id" class="form-select" required>@foreach($branches as $b)<option value="{{ $b->id }}">{{ $b->name }}</option>@endforeach</select></div><div><label class="form-label">Sucursal de destino</label><select name="to_branch_id" class="form-select" required>@foreach($branches as $b)<option value="{{ $b->id }}">{{ $b->name }}</option>@endforeach</select></div><div class="full"><label class="form-label">Rollo de origen</label><select name="roll_id" class="form-select" required>@foreach($rolls as $roll)<option value="{{ $roll->id }}">{{ $roll->code }} · {{ $roll->product_name }} · {{ $roll->meters_available }} m · sucursal #{{ $roll->branch_id }}</option>@endforeach</select></div><div><label class="form-label">Metros a transferir</label><input type="number" name="meters" min="0.001" step="0.001" class="form-control" required></div></div><div class="form-actions"><button class="btn btn-dark">Confirmar transferencia →</button></div></form></section>
+@endsection
