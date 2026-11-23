@@ -14,6 +14,9 @@ Route::middleware('auth.session')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
     Route::get('/ventas/crear', [SaleController::class, 'create'])->name('sales.create');
     Route::post('/ventas', [SaleController::class, 'store'])->name('sales.store');
+    Route::get('/rollos/{roll}/historial-ubicacion', [CrudController::class, 'historialUbicacion'])->whereNumber('roll')->name('rollos.historial');
+    Route::post('/rollos/{roll}/reubicar', [CrudController::class, 'reubicar'])->whereNumber('roll')->name('rollos.reubicar');
+    Route::get('/auditoria', [CrudController::class, 'auditoria'])->name('auditoria.index');
     Route::get('/ventas', [SaleController::class, 'index'])->name('sales.index');
     Route::get('/transferencias/crear', [TransferController::class, 'create'])->name('transfers.create');
     Route::post('/transferencias', [TransferController::class, 'store'])->name('transfers.store');

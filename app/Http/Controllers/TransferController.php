@@ -13,6 +13,7 @@ class TransferController extends Controller {
  $newId=DB::table('rolls')->insertGetId(['code'=>$roll->code.'-T'.$transfer,'product_id'=>$roll->product_id,'branch_id'=>$d['to_branch_id'],'location_id'=>null,'meters_initial'=>$d['meters'],'meters_available'=>$d['meters'],'meters_sold'=>0,'status'=>'disponible','created_at'=>now(),'updated_at'=>now()]);
  DB::table('transfer_details')->insert(['transfer_id'=>$transfer,'source_roll_id'=>$roll->id,'destination_roll_id'=>$newId,'meters'=>$d['meters'],'created_at'=>now(),'updated_at'=>now()]);
  foreach([[$roll->id,$d['from_branch_id'],-$d['meters'],'transferencia_salida'],[$newId,$d['to_branch_id'],$d['meters'],'transferencia_entrada']] as [$rid,$bid,$meters,$type])DB::table('inventory_movements')->insert(['roll_id'=>$rid,'branch_id'=>$bid,'user_id'=>session('user_id'),'type'=>$type,'meters'=>$meters,'reason'=>'Transferencia #'.$transfer,'reference_id'=>$transfer,'created_at'=>now(),'updated_at'=>now()]);
+  DB::table('audit_logs')->insert(['user_id'=>session('user_id'),'action'=>'transferencia_confirmada','entity_type'=>'transfer','entity_id'=>$transfer,'old_values'=>json_encode(['source_roll_id'=>$roll->id,'source_meters_available'=>(float)$roll->meters_available]),'new_values'=>json_encode(['destination_roll_id'=>$newId,'meters'=>(float)$d['meters'],'destination_branch_id'=>(int)$d['to_branch_id']]),'ip_address'=>request()->ip(),'created_at'=>now(),'updated_at'=>now()]);
  });return redirect()->route('transfers.index')->with('success','Transferencia registrada.');
  }
 }

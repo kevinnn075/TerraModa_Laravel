@@ -18,6 +18,7 @@ class SaleController extends Controller {
    DB::table('sale_details')->insert(['sale_id'=>$saleId,'product_id'=>$product->id,'roll_id'=>$roll->id,'meters'=>$data['meters'],'price_per_meter'=>$product->sale_price,'subtotal'=>$subtotal,'created_at'=>now(),'updated_at'=>now()]);
    $available=round($roll->meters_available-$data['meters'],3);DB::table('rolls')->where('id',$roll->id)->update(['meters_available'=>$available,'meters_sold'=>DB::raw('meters_sold + '.(float)$data['meters']),'status'=>$available<=0?'agotado':'disponible','updated_at'=>now()]);
    DB::table('inventory_movements')->insert(['roll_id'=>$roll->id,'branch_id'=>$data['branch_id'],'user_id'=>session('user_id'),'type'=>'salida_venta','meters'=>-$data['meters'],'reason'=>'Venta #'.$saleId,'reference_id'=>$saleId,'created_at'=>now(),'updated_at'=>now()]);
+   DB::table('audit_logs')->insert(['user_id'=>session('user_id'),'action'=>'venta_confirmada','entity_type'=>'sale','entity_id'=>$saleId,'old_values'=>json_encode(['roll_id'=>$roll->id,'meters_available'=>(float)$roll->meters_available]),'new_values'=>json_encode(['meters_sold'=>(float)$data['meters'],'meters_available'=>$available,'subtotal'=>$subtotal,'discount_amount'=>$discount,'total'=>$total]),'ip_address'=>request()->ip(),'created_at'=>now(),'updated_at'=>now()]);
   });
   return redirect()->route('sales.index')->with('success','Venta registrada y metraje descontado correctamente.');
  }

@@ -3,7 +3,7 @@
 <body><div class="app-shell"><aside class="sidebar"><div class="brand"><span class="brand-mark">TM</span><div><strong>TERRA MODA</strong><small>Gestión inteligente</small></div></div><div class="side-caption">MENÚ PRINCIPAL</div>
 <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard')?'active':'' }}">▦ <span>Panel principal</span></a>
 <div class="side-caption">OPERACIONES</div>
-@foreach([['sucursales.index','Sucursales'],['categorias.index','Categorías'],['productos.index','Telas y productos'],['rollos.index','Rollos'],['ubicaciones.index','Ubicaciones'],['clientes.index','Clientes'],['sales.index','Ventas'],['transfers.index','Transferencias'],['movimientos.index','Movimientos'],['usuarios.index','Usuarios']] as [$route,$label])
+@foreach([['sucursales.index','Sucursales'],['categorias.index','Categorías'],['productos.index','Telas y productos'],['rollos.index','Rollos'],['ubicaciones.index','Ubicaciones'],['clientes.index','Clientes'],['sales.index','Ventas'],['transfers.index','Transferencias'],['movimientos.index','Movimientos'],['auditoria.index','Auditoría'],['usuarios.index','Usuarios']] as [$route,$label])
 <a href="{{ route($route) }}" class="{{ request()->routeIs($route)?'active':'' }}">◈ <span>{{ $label }}</span></a>
 @endforeach
 <div class="sidebar-bottom"><div class="user-dot">{{ strtoupper(substr(session('user_name','A'),0,1)) }}</div><div class="user-info"><strong>{{ session('user_name') }}</strong><small>{{ ucfirst(session('user_role')) }}</small></div><form method="POST" action="{{ route('logout') }}">@csrf<button class="logout" title="Cerrar sesión">↗</button></form></div>

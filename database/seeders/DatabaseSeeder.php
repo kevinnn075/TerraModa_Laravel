@@ -12,8 +12,8 @@ class DatabaseSeeder extends Seeder {
   $cat=DB::table('categories')->where('name','Algodón')->first();
   DB::table('products')->updateOrInsert(['code'=>'TEL-001'],['name'=>'Algodón estampado floral','category_id'=>$cat->id,'fabric_type'=>'Algodón','design'=>'Floral','color'=>'Multicolor','purchase_price'=>15,'sale_price'=>25,'low_stock_meters'=>10,'active'=>1,'created_at'=>now(),'updated_at'=>now()]);
   $product=DB::table('products')->where('code','TEL-001')->first();
-  $loc=DB::table('locations')->first();
-  if(!$loc){$locId=DB::table('locations')->insertGetId(['branch_id'=>$branch->id,'warehouse'=>'Depósito principal','aisle'=>'B','shelf'=>'03','level'=>'2','created_at'=>now(),'updated_at'=>now()]);}else $locId=$loc->id;
+  $loc=DB::table('locations')->where('branch_id',$branch->id)->where('shelf','3')->where('position','1')->first();
+  if(!$loc){$locId=DB::table('locations')->insertGetId(['branch_id'=>$branch->id,'warehouse'=>'Depósito principal','aisle'=>'B','shelf'=>'3','position'=>'1','level'=>'2','created_at'=>now(),'updated_at'=>now()]);}else {$locId=$loc->id;DB::table('locations')->where('id',$locId)->update(['position'=>'1','updated_at'=>now()]);}
   DB::table('rolls')->updateOrInsert(['code'=>'TM-0001'],['product_id'=>$product->id,'branch_id'=>$branch->id,'location_id'=>$locId,'meters_initial'=>50,'meters_available'=>50,'meters_sold'=>0,'status'=>'disponible','created_at'=>now(),'updated_at'=>now()]);
   DB::table('customers')->insertOrIgnore(['full_name'=>'Cliente demostración','phone'=>'70000000','email'=>'cliente@terramoda.test','active'=>1,'created_at'=>now(),'updated_at'=>now()]);
  }

@@ -12,6 +12,8 @@ Proyecto web de demostración desarrollado con **Laravel + PHP + MySQL + Blade +
 - Internet durante la primera instalación para descargar dependencias y Bootstrap/Google Fonts desde CDN.
 
 ## Instalación en Windows (XAMPP + Composer)
+Puedes ejecutar `INICIAR_TERRA_MODA.bat` para comprobar PHP/Composer, instalar dependencias si falta `vendor`, preparar `.env` y opcionalmente ejecutar migraciones y datos demo. Antes, crea la base de datos `terra_moda` y verifica las credenciales.
+
 1. Instala XAMPP con PHP 8.2+ y Composer. Inicia **MySQL** desde el panel de XAMPP.
 2. Extrae `TerraModa_Laravel.zip` en una carpeta sencilla, por ejemplo `C:\\proyectos\\TerraModa_Laravel`.
 3. Abre esa carpeta en Visual Studio Code y abre una terminal dentro de ella.
@@ -19,7 +21,7 @@ Proyecto web de demostración desarrollado con **Laravel + PHP + MySQL + Blade +
    ```bash
    composer install
    ```
-5. Copia `.env.example` a `.env`:
+5. El proyecto incluye `.env.example`; cópialo a `.env`:
    ```bash
    copy .env.example .env
    ```
@@ -45,6 +47,12 @@ Proyecto web de demostración desarrollado con **Laravel + PHP + MySQL + Blade +
 
 Cambia la contraseña y elimina datos de demostración antes de usarlo con información real.
 
+## Cambios del formulario GCS-TM-CC-001 a CC-004
+- **CC-001 (pendiente de aprobación):** se documenta la discrepancia. El proyecto sigue siendo web y MySQL según el código actual; no se migra a PostgreSQL ni se cambia a Android hasta que el equipo y tutor aprueben formalmente la decisión.
+- **CC-002:** la venta confirma el saldo dentro de una transacción y bloquea el rollo para impedir sobreventa concurrente.
+- **CC-003:** las ubicaciones admiten estante y posición, muestran el formato `E<estante>-P<posición>` y permiten reubicar rollos registrando el historial.
+- **CC-004:** se incorpora bitácora de auditoría para ventas, transferencias y reubicaciones, además de filtros de movimientos por rango de fechas.
+
 ## Funciones incluidas
 - Inicio de sesión local por sesión y contraseña cifrada.
 - Panel con productos, rollos, metraje disponible, ventas y resumen por sucursal.
@@ -53,7 +61,7 @@ Cambia la contraseña y elimina datos de demostración antes de usarlo con infor
 - Bloqueo del rollo y transacción de base de datos para evitar sobreventa concurrente.
 - Descuento automático del metraje vendido y registro de movimiento.
 - Transferencias entre sucursales con movimientos de salida y entrada.
-- Historial de ventas y transferencias.
+- Historial de ventas y transferencias.\n- Reubicación de rollos con historial de ubicación y bitácora consultable.
 - Estructura de base de datos adicional para compras, caja, reglas de descuento y documentos fiscales futuros.
 - Diseño responsivo en español.
 
