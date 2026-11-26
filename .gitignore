@@ -4,6 +4,9 @@
 /public/hot
 /storage/*.key
 /storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
 /.env
 .phpunit.result.cache
 /.idea
